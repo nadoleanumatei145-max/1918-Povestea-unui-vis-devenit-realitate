@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1918 Povestea unui vis devenit realitate</title>
+    <link href="https://fonts.googleapis.com" rel="stylesheet">
+    <style>
+        body {
+            background-color: black;
+            font-family: montserrat, sans-serif;
+            margin: 0;
+        }
+        h1 {
+            text-align: center;
+            color: white;
+            text-shadow: 0px 0px 10px black;
+            padding: 0 10px;
+        }
+        #titlu {
+            text-align: center;
+            color: white;
+            font-size: 100px;
+            text-shadow: 0px 0px 10px black;
+            margin-top: 0;
+            padding-top: 20px;
+        }
+        #rezultat {
+            text-shadow: 0px 0px 10px black;
+        }
+
+        /* ==== STILURI NAVIGARE ==== */
+        nav {
+            display: flex;
+            flex-direction: column;
+            position: sticky;
+            top: 0;
+            background: linear-gradient(0deg, rgba(0, 0, 0, 0) 0%, #000000 70%);
+            z-index: 10; /* L-am mărit pentru a sta deasupra tuturor elementelor */
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+        #menu-btn {
+            display: none; /* Ascuns pe desktop */
+            background: transparent;
+            color: white;
+            border: none;
+            font-size: 30px;
+            cursor: pointer;
+            align-self: flex-start;
+            margin-left: 20px;
+            padding: 0;
+        }
+        #nav-links {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-evenly;
+            align-items: center;
+            width: 100%;
+            flex-wrap: wrap;
+            padding-bottom: 10px;
+        }
+        a {
+            text-decoration: none;
+            color: white;
+            transition: all 0.15s ease-in-out;
+            font-weight: normal;
+            padding: 5px 10px;
+            text-align: center;
+        }
+        a:hover {
+            transform: scale(1.05) translateY(2px);
+            font-weight: bold;
+        }
+
+        /* ==== RESTUL STILURILOR ==== */
+        header {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8)), url("https://mvu.ro/wp-content/uploads/15.-109118-MODIFICAT.jpg");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            min-height: 53vh;
+            filter: grayscale(100%);
+            text-align: center;
+            align-content: center;
+        }
+        h3 {
+            text-align: center;
+            color: white;
+            margin-top: 20px;
+            padding: 20px;
+        }
+        img {
+            aspect-ratio: auto;
+            object-fit: cover;
+            display: block;
+        }
+        h2 {
+            color: white;
+            margin-bottom: 60px;
+            font-size: 40px;
+            text-shadow: 0px 0px 10px black;
+            padding-top: 20px;
+            text-align: center;
+        }
+        p {
+            padding-left: 10px;
+            padding-right: 10px;
+            color: white;
+            text-align: center;
+            padding-bottom: 20px;
+            line-height: 1.5;
+        }
+        li {
+            color: white;
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+        button.quiz-btn {
+            color: white;
+            background-color: #3f4247;
+            border-top: aliceblue solid 1px;
+            border-radius: 15px;
+            width: 50%;
+            margin-bottom: 20px;
+            border-bottom: 0;
+            border-left-width: 0;
+            border-right-width: 0;
+            padding: 10px;
+            margin-top: 20px;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+        }
+        button.quiz-btn:hover {
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            transform: translateY(-2.5px) scale(1.05);
+        }
+        input[type=radio] {
+            accent-color: #548bf1;
+        }
+        label {
+            cursor: pointer;
+        }
+        details {
+            color: white;
+            background-color: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-top: aliceblue solid 1px;
+            border-radius: 15px;
+            padding: 10px;
+            margin-bottom: 40px;
+            width: 50%;
+            margin-left: auto;
+            margin-right: auto;
+            cursor: pointer;
+            transition: all 0.075s ease-in-out;
+        }
+        details::details-content {
+            transition: height 0.3s ease, opacity 0.3s ease;
+            height: 0;
+            overflow: hidden;
+            opacity: 0;
+        }
+        details[open]::details-content {
+            height: auto;
+            opacity: 1;
+            align-items: center;
+            align-content: center;
+            justify-items: center;
+            justify-content: center;
+        }
+        details:hover {
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            transform: translateY(-2.5px) scale(1.025);
+        }
+        details[open]:hover {
+            box-shadow: 0 0px 0px rgba(0, 0, 0, 0.2);
+            transform: translateY(0px) scale(1);
+        }
+        .cutie {
+            backdrop-filter: blur(20px);
+            border-top: aliceblue solid 1px;
+            border-radius: 15px;
+            width: 50%;
+            margin: 0 auto 40px auto;
+        }
+        .categorie {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+            padding-bottom: 20px;
+            opacity: 0;
+            animation: reveal linear forwards;
+            animation-timeline: view();
+            animation-range: entry 0% cover 50%;
+        }
+        @keyframes reveal {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        #prm {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)) ,url("https://evenimentulistoric.ro/wp-content/uploads/2021/08/antanta-razboi.jpg");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+        #situatia {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url("https://iasicapitaladerazboi.ro/wp-content/uploads/2018/12/sarbatoare-30-martie-1918-1.jpg");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+        #etape {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url("https://colectionaruldeistorie.ro/wp-content/uploads/2021/03/Greater_Rumania_New_York_Times_1919.jpg");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+        #regina {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url("https://gdb.rferl.org/04020000-0aff-0242-c494-08daae5d048c_cx29_cy25_cw52_w1080_h608_s.jpg");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+        #viata {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url("https://www.vice.com/wp-content/uploads/sites/2/2017/12/1512214816607-9.jpeg");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+        #leg {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url("https://www.politiadefrontiera.ro/files/news/154201412890-poza1w1418h1000q100-S3.jpg");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+        #intre {
+            color: white;
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url("https://as1.ftcdn.net/jpg/02/66/33/82/220_F_266338299_wTr8tcMGNmjFbEJVnrkKXrrsHABMlqXY.jpg");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+        #quiz-container {
+            backdrop-filter: blur(20px);
+            border-top: aliceblue solid 1px;
+            border-radius: 15px;
+            width: 50%;
+            margin: 0 auto 40px auto;
+            text-align: center;
+            padding: 20px;
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        footer {
+            padding: 40px 20px;
+            background-color: #111;
+        }
+
+        /* ==== MEDIA QUERIES PENTRU TELEFOANE ==== */
+        @media screen and (max-width: 768px) {
+            #titlu {
+                font-size: 45px;
+            }
+            h1 {
+                font-size: 20px;
+            }
+            h2 {
+                font-size: 28px;
+                margin-bottom: 30px;
+            }
+            details, .cutie, #quiz-container, button.quiz-btn {
+                width: 90%;
+            }
+            ul {
+                padding-left: 20px;
+            }
+            #prm, #situatia, #etape, #regina, #viata, #leg, #intre {
+                background-attachment: scroll;
+            }
+
+            /* Modificări pentru meniul de pe mobil */
+            nav {
+                background: linear-gradient(0deg, rgba(0, 0, 0, 0) 0%, #000000 90%);
+                padding-bottom: 0;
+                padding-top: 0;
+            }
+            #menu-btn {
+                display: block; /* Arată butonul de meniu pe telefon */
+            }
+            #nav-links {
+                display: none; /* Ascunde link-urile implicit */
+                flex-direction: column;
+                background-color: rgba(0, 0, 0, 0.95); /* Fundal negru opac ca să nu se suprapună peste text */
+                width: 100%;
+                padding-top: 15px;
+                padding-bottom: 15px;
+                margin-top: 10px;
+            }
+            #nav-links.show {
+                display: flex; /* Arată link-urile doar când primește clasa "show" din JavaScript */
+            }
+            #nav-links a {
+                padding: 15px;
+                width: 100%;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            #nav-links a:last-child {
+                border-bottom: none;
+            }
+        }
+    </style>
+    <script>
+        function verificaRezultate() {
+            let scor = 0;
+            const totalIntrebari = 4;
+
+            for (let i = 1; i <= totalIntrebari; i++) {
+                const raspuns = document.querySelector(`input[name="q${i}"]:checked`);
+                if (raspuns && raspuns.value === "corect") {
+                    scor++;
+                }
+            }
+
+            const mesajRezultat = document.getElementById("rezultat");
+            mesajRezultat.innerHTML = `Ai obținut ${scor} din ${totalIntrebari} puncte!`;
+            mesajRezultat.style.color = scor === totalIntrebari ? "#00ff00" : "orange";
+            mesajRezultat.style.fontWeight = "bold";
+        }
+
+        /* Script pentru meniul pe mobil */
+        function toggleMenu() {
+            const navLinks = document.getElementById("nav-links");
+            navLinks.classList.toggle("show");
+        }
+
+        // Funcție pentru a închide meniul automat după ce dăm click pe un link (doar pe mobil)
+        function closeMenu() {
+            if (window.innerWidth <= 768) {
+                document.getElementById("nav-links").classList.remove("show");
+            }
+        }
+    </script>
+</head>
+<body>
+<nav>
+    <button id="menu-btn" onclick="toggleMenu()">☰</button>
+    <div id="nav-links">
+        <a href="#prm" onclick="closeMenu()">Primul Razboi Modial</a>
+        <a href="#situatia" onclick="closeMenu()">Situatia romanilor din provincii</a>
+        <a href="#etape" onclick="closeMenu()">Etapele Marii Uniri</a>
+        <a href="#regina" onclick="closeMenu()">Studiu de caz | Regina Maria</a>
+        <a href="#viata" onclick="closeMenu()">Viata cotidiana</a>
+        <a href="#leg" onclick="closeMenu()">Legatura cu prezentul</a>
+        <a href="#intre" onclick="closeMenu()">Intrebari</a>
+    </div>
+</nav>
+
+<header>
+    <h1 id="titlu">1918 Povestea unui vis devenit realitate</h1>
+    <h1>Piatra nu spera sa fie nimic altceva decat piatra. Dar, coborand, se alatura altor pietre si devine templu.</h1>
+    <p>-Antoine de Saint-Exupéry-</p>
+</header>
+
+<div id="prm" class="categorie">
+    <h2>Primul Razboi Modial</h2>
+    <details name="prim">
+        <summary>Neutralitatea | 1914-1916</summary>
+        <p>Deși avea un tratat secret cu Puterile Centrale (1883), România a ales neutralitatea în 1914, căutând alianțe care să-i susțină obiectivele naționale.</p>
+    </details>
+    <details name="prim">
+        <summary>Intrarea în război | august 1916</summary>
+        <p>România a semnat tratate cu Antanta (Franța, Marea Britanie, Rusia, Italia) la 4 august 1916 și a declarat război Austro-Ungariei pe 14/27 august 1916, atacând în Transilvania.</p>
+    </details>
+    <details name="prim">
+        <summary>Criza din 1916-1917</summary>
+        <p>Contraofensiva Puterilor Centrale (Germania, Austro-Ungaria, Bulgaria) a dus la ocuparea a două treimi din țară, inclusiv Bucureștiul, și retragerea guvernului și armatei în Moldova.</p>
+    </details>
+    <details name="prim">
+        <summary>Rezistența și refacerea | 1917</summary>
+        <p>Cu ajutorul misiunii militare franceze condusă de generalul Henri Berthelot, armata a fost reorganizată. În vara anului 1917, au avut loc marile bătălii victorioase de la Mărăști, Mărășești și Oituz.</p>
+    </details>
+    <details name="prim">
+        <summary>Armistițiul și finalul | 1917-1918</summary>
+        <p>Ieșirea Rusiei din război a forțat România să semneze armistițiul de la Focșani (decembrie 1917) și apoi tratatul de pace preliminar de la Buftea (martie 1918).</p>
+    </details>
+    <details name="prim">
+        <summary>Finalul victorios</summary>
+        <p>Pe 10 noiembrie 1918, România a reintrat în război, contribuind la victoria finală și permițând unirea Transilvaniei, Basarabiei și Bucovinei cu Vechiul Regat. </p>
+    </details>
+</div>
+
+<div id="situatia" class="categorie">
+    <h2>Situatia Romanilor din Provincii</h2>
+    <details name="sit">
+        <summary>Românii din Transilvania și Banat</summary>
+        <ul>
+            <li><b>Încorporare forțată</b>: Peste 484.000 de români transilvăneni au fost înregimentați în armata austro-ungară, reprezentând peste 52% din totalul mobilizaților din regiune.</li>
+            <li><b>Drama războiului</b>: Românii au fost trimiși pe fronturile din Galiția (contra Rusiei) și, ulterior, pe frontul italian, suferind pierderi enorme.</li>
+            <li><b>Supraveghere și arestări</b>: Elitele intelectuale românești au fost persecutate, arestate sau plasate sub supraveghere de autoritățile maghiare.</li>
+            <li><b>Acțiuni politice</b>: Consiliul Național Român Central a organizat gărzile naționale și a preluat puterea în toamna anului 1918, pregătind unirea prin rezoluția de la Alba Iulia din 1 Decembrie 1918. </li>
+        </ul>
+    </details>
+    <details name="sit">
+        <summary>Românii din Bucovina</summary>
+        <ul>
+            <li><b>Front de luptă</b>: Bucovina a fost teatru de război, suferind distrugeri masive.</li>
+            <li><b>Mobilizare</b>: Populația a trecut prin aceleași drame ale recrutării forțate în armata austro-ungară.</li>
+            <li><b>Actul Unirii</b>: Bucovina a fost prima provincie care s-a unit necondiționat cu Regatul României, prin Congresul General al Bucovinei de la Cernăuți, la 15/28 noiembrie 1918. </li>
+        </ul>
+    </details>
+    <details name="sit">
+        <summary>Românii din Basarabia</summary>
+        <ul>
+            <li><b>Context</b>: Basarabenii au fost încorporați în armata țaristă.</li>
+            <li><b>Revoluția Rusă</b>: Prăbușirea Imperiului Rus (1917) a creat un vid de putere, permițând organizarea românilor din Basarabia.</li>
+            <li><b>Sfatul Țării</b>: A fost creat Sfatul Țării, care a proclamat independența Republicii Democratice Moldovenești și, la 27 martie/9 aprilie 1918, a votat unirea cu România. </li>
+        </ul>
+    </details>
+</div>
+
+<div id="etape" class="categorie">
+    <h2>Etapele Marii Uniri</h2>
+    <details name="etap">
+        <summary>Basarabia | 27 Martie</summary>
+        <ul>
+            <li><b>Primul act al Marii Uniri</b>: Basarabia a fost prima provincie istorică care s-a unit cu Regatul României în 1918, deschizând calea pentru unirea Bucovinei și a Transilvaniei.</li>
+            <li><b>Sfatul Țării și Voința Populară</b>: Unirea a fost votată de Sfatul Țării la Chișinău (organul reprezentativ suprem), în condiții de instabilitate (revoluția rusă), ca o decizie democratică de a scăpa de anarhia bolșevică și de a reveni la țara-mamă.</li>
+            <li><b>Dreptul istoric și etnic</b>: Actul a reprezentat reunificarea teritoriului românesc dintre Prut și Nistru, desprins din Moldova și anexat de Imperiul Rus în 1812. </li>
+        </ul>
+        <h3>„Basarabia venea ca o «fiică» spre «mama» sa, România.” — Istoricul Ioan-Aurel Pop </h3>
+    </details>
+    <details name="etap">
+        <summary>Bucovina | 28 noiembrie</summary>
+        <ul>
+            <li><b>Context</b>: După destrămarea Austro-Ungariei în urma Primului Război Mondial, românii din Bucovina au decis autodeterminarea.</li>
+            <li><b>Adunarea Constituantă | 27 oct. 1918</b>: S-a format Consiliul Național Român, care a preluat puterea și a decis unirea cu celelalte țări românești.</li>
+            <li><b>Congresul General | 28 nov. 1918</b>: Reprezentanții românilor, polonezilor, germanilor și ucrainenilor au votat unirea necondiționată a Bucovinei în vechile ei hotare cu Regatul României.</li>
+            <li><b>Recunoaștere</b>: Unirea a fost consfințită prin decret-lege la 18 decembrie 1918 de către Regele Ferdinand I. </li>
+        </ul>
+        <h3>„Unirea nu este o cucerire a armelor, ci întoarcerea la vatră a fraţilor despărţiţi.”
+            — Iancu Flondor </h3>
+    </details>
+    <details name="etap">
+        <summary>Transilvania | 1 decembrie</summary>
+        <ul>
+            <li><b>Context</b>: Prăbușirea Imperiului Austro-Ungar a permis națiunilor din cuprinsul său să-și decidă soarta.</li>
+            <li><b>Decizia</b>: 1228 de delegați, reprezentând toți românii din Transilvania, Banat, Crișana și Maramureș, au votat în unanimitate Rezoluția de Unire, citită de Vasile Goldiș, în sala "Cazinei" militare din Alba Iulia.</li>
+            <li><b>Organizare</b>: Procesul a fost condus de Consiliul Național Român Central.</li>
+            <li><b>Semnificație</b>: 1 Decembrie a devenit Ziua Națională a României, marcând unirea tuturor provinciilor istorice locuite de români. </li>
+        </ul>
+        <h3>„Adunarea Națională a tuturor românilor din Transilvania, Banat și Țara Ungurească decretează unirea acestor români și a tuturor teritoriilor locuite de dânșii cu România.”
+            — Rezoluția de la Alba Iulia </h3>
+    </details>
+</div>
+
+<div id="regina" class="categorie">
+    <h2>Studiu de caz | Regina Maria</h2>
+    <details name="reg">
+        <summary>I. Regina Soldat | Plan intern</summary>
+        <ul>
+            <li><b>Implicarea în timpul războiului | 1916-1918</b>: În timpul retragerii în Moldova și a ocupației germane, Regina Maria a refuzat să părăsească țara. S-a implicat direct în ajutorarea răniților, vizitând spitalele de campanie și zonele de front, fiind supranumită "mama răniților" sau "Regina Soldat".</li>
+            <li><b>Moralul Populației</b>: A susținut moralul soldaților și al populației civile, devenind un simbol al rezistenței și al speranței în refacerea țării.</li>
+            <li><b>Rolul politic</b>: A avut o influență decisivă asupra regelui Ferdinand I, încurajându-l să rămână fidel Antantei și să nu accepte o pace separată cu Puterile Centrale. </li>
+        </ul>
+    </details>
+    <details name="reg">
+        <summary>II. Diplomat al Marii Uniri | Plan Extern</summary>
+        <ul>
+            <li><b>Conferința de Pace de la Paris | 1919</b>: Regina Maria a întreprins o acțiune diplomatică personală la Paris, în 1919, pentru a susține cauza românească. Prin carisma și influența sa, a pledat în fața liderilor aliați pentru recunoașterea frontierelor României Mari.</li>
+            <li><b>Legături europene</b>: Folosindu-se de relațiile sale de familie, a contribuit la securizarea sprijinului britanic și rus pentru unirea Basarabiei, Bucovinei și Transilvaniei. </li>
+        </ul>
+    </details>
+    <details name="reg">
+        <summary>III. Consfințirea Unirii</summary>
+        <ul>
+            <li><b>Vizita în Transilvania 1919</b>: Imediat după Unire, Regina Maria și Regele Ferdinand au vizitat principalele orașe din Transilvania, consolidând legătura dintre monarhie și noile provincii unite.</li>
+            <li><b>Încoronarea de la Alba Iulia | 15 octombrie 1922</b>: Regina Maria și Regele Ferdinand au fost încoronați la Alba Iulia ca suverani ai României Mari. </li>
+        </ul>
+    </details>
+</div>
+
+<div id="viata" class="categorie">
+    <h2>Viata cotidiana in timpul Marii Uniri</h2>
+    <div class="cutie">
+        <p>Viața cotidiană în România în timpul Marii Uniri (1918) și imediat după a fost un contrast puternic între entuziasmul patriotic al realizării naționale și o realitate economică și socială extrem de dificilă, marcată de traumele Primului Război Mondial, rechiziții și penurie. </p>
+    </div>
+    <details name="viat">
+        <summary>Contextul Socio-Economic Dificil</summary>
+        <ul>
+            <li><b>Lipsuri și raționalizare</b>: Viața de zi cu zi era dominată de penurie. Alimentele de bază erau greu de găsit, iar populația a supraviețuit folosind „surogate”.</li>
+            <li><b>Rechiziții</b>: Populația era supusă rechizițiilor de alimente și bunuri, în special în teritoriile care fuseseră sub ocupație.</li>
+            <li><b>Inflație și prețuri mari</b>: După război, prețurile au crescut vertiginos, iar valoarea banilor a scăzut.</li>
+            <li><b>Infrastructură distrusă</b>: Căile ferate, drumurile și clădirile erau grav avariate. </li>
+        </ul>
+    </details>
+    <details name="viat">
+        <summary>Atmosfera Socială și "Rutina" Unirii</summary>
+        <ul>
+            <li><b>Entuziasm și incertitudine</b>: În ciuda dificultăților, atmosfera a fost marcată de o mare mândrie națională și de momente festive.</li>
+            <li><b>Revenirea la normalitate</b>: Imediat după sărbătorirea momentelor istorice, populația revenea la rutina cotidiană obositoare.</li>
+            <li><b>Insecuritate</b>: În unele regiuni, populația era amenințată de bande de dezertori sau soldați. </li>
+        </ul>
+    </details>
+    <details name="viat">
+        <summary>Viața la Sat și Oraș</summary>
+        <ul>
+            <li><b>Majoritatea rurală</b>: Peste 75-80% din populație trăia în mediul rural, la limita subzistenței.</li>
+            <li><b>Reforma Agrară</b>: Anii imediat următori (1918-1921) au adus speranța prin reforma agrară, care a împroprietărit peste un milion de țărani.</li>
+            <li><b>Urbanizarea</b>: Orașele mari treceau prin procese de adaptare la noile granițe, fiind aglomerate de funcționari, militari și refugiați. </li>
+        </ul>
+    </details>
+    <details name="viat">
+        <summary>Rolul Femeilor și Mentalități</summary>
+        <ul>
+            <li><b>Femeile în prim-plan</b>: Femeile au jucat un rol activ în viața publică, organizând servicii de îngrijire, dar și participând la mișcarea națională.</li>
+            <li><b>Mentalități noi</b>: Epoca a adus conceptul de "om nou" român, însă mentalitățile au rămas o vreme influențate de traumele războiului. </li>
+        </ul>
+    </details>
+</div>
+
+<div id="leg" class="categorie">
+    <h2>Legatura Marii Uniri cu prezentul</h2>
+    <div class="cutie">
+        <p>Marea Unire de la 1918 reprezintă fundamentul viu al României de astăzi, fiind mult mai mult decât o simplă dată calendaristică, deoarece constituie actul juridic și politic care ne permite să existăm în actuala formă statală.</p>
+        <p>Practic, fiecare drept cetățenesc exercitat astăzi și stabilitatea granițelor în care trăim sunt rezultate palpabile ale solidarității de la 1918.</p>
+    </div>
+    <details name="uni">
+        <summary>Tradiție și Identitate</summary>
+        <ul>
+            <li><b>Parada Militară și Ceremonii</b>: Anual, se organizează parade militare și ceremonii la statuile făuritorilor Unirii.</li>
+            <li><b>Spectacole și Manifestări Culturale</b>: Se organizează spectacole de muzică populară, concerte și târguri, consolidând identitatea culturală comună.</li>
+            <li><b>Simboluri naționale</b>: Folosirea drapelului, purtarea portului popular și intonarea imnului. </li>
+        </ul>
+    </details>
+    <details name="uni">
+        <summary>Mesajul Actual al Marii Uniri</summary>
+        <ul>
+            <li><b>Unitate în diversitate</b>: 1 Decembrie amintește de necesitatea coeziunii naționale.</li>
+            <li><b>Lecția elitelor</b>: Actul de la 1918 a fost posibil prin curajul elitelor politice, un exemplu des invocat în prezent.</li>
+            <li><b>Moment de reflecție</b>: 1 Decembrie este și o ocazie de a reflecta asupra drumului României ca stat modern. </li>
+        </ul>
+    </details>
+</div>
+
+<div id="intre" class="categorie">
+    <h2>Intrebari Marea Unire</h2>
+    <div id="quiz-container">
+        <div class="question">
+            <p><b>1. Ce decizie a luat România în 1914?</b></p>
+            <label>
+                <input type="radio" name="q1" value="corect">
+                <span>Neutralitate</span>
+            </label>
+            <label>
+                <input type="radio" name="q1" value="greșit">
+                <span>Intrarea în război</span>
+            </label>
+        </div>
+
+        <div class="question">
+            <p><b>2. Cu cine a semnat România tratate în august 1916?</b></p>
+            <label>
+                <input type="radio" name="q2" value="greșit">
+                <span>Puterile Centrale</span>
+            </label>
+            <label>
+                <input type="radio" name="q2" value="corect">
+                <span>Antanta</span>
+            </label>
+        </div>
+
+        <div class="question">
+            <p><b>3. Unde s-a retras guvernul în 1916?</b></p>
+            <label>
+                <input type="radio" name="q3" value="corect">
+                <span>Moldova</span>
+            </label>
+            <label>
+                <input type="radio" name="q3" value="greșit">
+                <span>Transilvania</span>
+            </label>
+        </div>
+
+        <div class="question">
+            <p><b>4. Cine a scris citatul despre piatra care devine templu?</b></p>
+            <label>
+                <input type="radio" name="q4" value="greșit">
+                <span>Regina Maria</span>
+            </label>
+            <label>
+                <input type="radio" name="q4" value="corect">
+                <span>Antoine de Saint-Exupéry</span>
+            </label>
+        </div>
+
+        <button class="quiz-btn" onclick="verificaRezultate()">Vezi Rezultatul</button>
+        <p id="rezultat"><b></b></p>
+    </div>
+</div>
+
+<footer>
+    <p><b>Bibliografie</b></p>
+    <p>1. LIVRESQ | 2. Enciclopedia Romaniei | 3. Wikipedia | 4. Moldova.org | 5. Hi-Story Lessons | 6. IICCMER | 7. Europa Libera Moldova | 8. Historia | 9. Ziarul Lumina</p>
+    <p>Nadoleanu Matei Ionut | clasa a IX-a A</p>
+    <p>13.02.2026</p>
+    <p>Colegiul National Gheorghe Munteanu Murgoci</p>
+</footer>
+</body>
+</html>
